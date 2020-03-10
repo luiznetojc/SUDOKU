@@ -5,7 +5,7 @@
 #define EMPTY short(0)
 #define SIZE 9
 
-bool auxverify(int aux[])
+bool auxverify(int aux[]) //verify array aux
 {
     for (int f = 0; f < SIZE; ++f) // verify array if all numbers are located
             {   
@@ -25,9 +25,9 @@ void print( short b[SIZE][SIZE] )
             for (int j = 0; j < 9; ++j)
             {
                 std::cout << "[";
-                for(int k = 0; k < 3;++k)
+                for(int k = 0; k < 3; ++k)
                 {    
-                    std::cout<<b[i][j]<<" ";
+                    std::cout << b[i][j] <<" ";
                     j++;
                 }
                 j--;   
@@ -37,35 +37,36 @@ void print( short b[SIZE][SIZE] )
             i++;
        }
        i--;
-       std::cout<<std::endl;
+       std::cout << std::endl;
     }
 
 }
-bool verifyline(short b[SIZE][SIZE],int lin)        //verify one line in the sudoku
+
+bool verifyline(short b[SIZE][SIZE],int lin) //verify one line in the sudoku
 {
-    int k[SIZE] = {0};      // auxiliary array to mark presence or not of a number in line
+    int aux[SIZE] = {0};      // auxiliary array to mark presence or not of a number in line
     
     for (int i = 0; i < SIZE; ++i)      // mark in array auxiliary
     {
-        k[b[lin][i]-1]++;
+        aux[b[lin][i]-1]++;
     }
 
-    if(auxverify(aux) == false) return false;
-    return true;
+    return(auxverify(aux));
 }
-bool verifycolumn(short b[SIZE][SIZE],int col)      //verify one column in the sudoku
+
+bool verifycolumn(short b[SIZE][SIZE],int col) //verify one column in the sudoku
 {
    
-    int k[SIZE] = {0};      // auxiliary array to mark presence or not of a number in line
+    int aux[SIZE] = {0};      // auxiliary array to mark presence or not of a number in line
     for (int i = 0; i < SIZE; ++i)      // mark in array auxiliary
     
     {
-        k[b[i][col]-1]++;
+        aux[b[i][col]-1]++;
     }
 
-    if(auxverify(aux) == false) return false
-    return true;
+    return(auxverify(aux));
 }
+
 bool verifysquare(short b[SIZE][SIZE])
 {
     int aux[SIZE] = {0};
@@ -91,26 +92,28 @@ bool verifysquare(short b[SIZE][SIZE])
             
             x -= 3; //restart x
             
-            if(auxverify(aux) == false) return false;
+            return(auxverify(aux));
 
             y += 3; //next square 
         }
     y = 0; //clean y to verify squares below
+
     x += 3; // go to squares below 
     }
     return true;
 }
-bool is_valid( short b[SIZE][SIZE] )
+
+bool is_valid( short b[SIZE][SIZE] ) //Test is valid sudoku table
 {
     
     for (int i = 0; i < SIZE; ++i)
     {
-        if(verifyline(b,i) == false) return false;
+        if(!verifyline(b,i)) return false;
         
-        else if(verifycolumn(b,i) == false) return false;
+        else if(!verifycolumn(b,i)) return false;
 
     }
-        if(verifysquare(b) == false) return false;
+        if(!verifysquare(b)) return false;
     return true;
 }
 
@@ -118,7 +121,7 @@ bool is_valid( short b[SIZE][SIZE] )
 int main(void)
 {
     short board[SIZE][SIZE];
-    while(!std::cin.eof())
+    while(!std::cin.eof()) //read input
     {
         for (int i = 0; i < SIZE; ++i)
         {
